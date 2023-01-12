@@ -10,7 +10,6 @@ export const getTasks = async (req, res) => {
 export const getTask = async (req, res) => {
   const { id } = req.params;
   const [result] = await pool.query("SELECT * FROM tasks WHERE id = ?", [id]);
-
   if (result.length === 0)
     return res.status(404).json({
       message: "Tasks not found",
@@ -38,9 +37,7 @@ export const updateTask = (req, res) => {
 export const deleteTaks = async (req, res) => {
   const { id } = req.params;
   const [result] = await pool.query("DELETE FROM tasks WHERE id = ?", [id]);
-
   if (result.affectedRows === 0)
     return res.status(404).json({ message: "Task not found" });
-
   return res.sendStatus(204);
 };
