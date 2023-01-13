@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react'
-import { getTasksRequest, deleteTaskRequest, createTaskRequest } from '../api/tasks.api.js'
+import { getTasksRequest, deleteTaskRequest, createTaskRequest, getTaskRequest } from '../api/tasks.api.js'
 import { TaskContext } from '../context/TaskContext'
 
 
@@ -33,7 +33,15 @@ export const TaskContextProvider = ({ children }) => {
             console.log(error)
         }
     }
-    return <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask }}>
+    const getTask = async (id) => {
+        try {
+            const response = await getTaskRequest(id);
+            return response.data;
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    return <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, getTask }}>
         {children}
     </TaskContext.Provider>
 }

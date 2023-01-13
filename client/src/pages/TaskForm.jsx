@@ -1,15 +1,32 @@
 import { Formik, Form } from 'formik'
 import { useTasks } from '../context/TaskProvider'
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 function TaskForm() {
-    const { createTask } = useTasks()
+    const { createTask, getTask } = useTasks()
+    const [task, setTask] = useState({
+        title: "",
+        description: "",
+    })
+    const params = useParams()
+    useEffect(() => {
+        const loadTask = async () => {
+            if (params.id) {
+                const task  = await getTask(params.id)
+                setTask({
+                    title: task.title,
+                    description: task.description,
+                })
+            }
+        }
+        loadTask()
+    }, [])
     return (
         <div>
+            <h1>{params.id ? "Edit Task" : "New Task"}</h1>
             <Formik
-                initialValues={{
-                    title: "",
-                    description: "",
-                }}
+                initialValues={task}
                 onSubmit={async (values, actions) => {
                     console.log(values)
                     createTask(values)
