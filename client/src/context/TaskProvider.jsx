@@ -54,7 +54,7 @@ export const TaskContextProvider = ({ children }) => {
             await toggleTaskDoneRequest(id, taskFound.done === 0 ? true : false);
             setTasks(
                 tasks.map((task) =>
-                    task.id === id ? { ...task, done: !task.done } : task
+                    task.id === id ? { ... task, done: !task.done } : task
                 )
             );
         } catch (error) {
