@@ -10,7 +10,6 @@ export const useTasks = () => {
     }
     return context
 }
-
 export const TaskContextProvider = ({ children }) => {
     const [tasks, setTasks] = useState([])
     const loadTasks = async () => {
@@ -62,7 +61,6 @@ export const TaskContextProvider = ({ children }) => {
             console.error(error);
         }
     };
-
     return <TaskContext.Provider value={{ tasks, loadTasks, deleteTask, createTask, getTask, updateTask, toggleTaskDone }}>
         {children}
     </TaskContext.Provider>
